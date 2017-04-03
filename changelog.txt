@@ -1,0 +1,321 @@
+DVBViewer EPG Update Script
+http://www.dvbviewer.tv/forum/topic/41624-epg-update-script/
+
+
+### New/Changed/Fixed in "2015-01-17 23:30"
+### Neu/Geändert/Behoben in "2015-01-17 23:30"
+.) Fixed: Terrestrial channel were skipped due to an error when reading/converting the frequency. Thanks to DVBViewer forum users "Murmeltier"!
+   Behoben: Terrestrische Kanäle wurden ausgelassen auf Grund eines Fehlers beim Auslesen/Konvertieren der Frequenz. Danke an DVBViewer Forumsbenutzer "Murmeltier"!
+
+
+### New/Changed/Fixed in "2013-03-23 12:00"
+### Neu/Geändert/Behoben in "2013-03-23 12:00"
+.) Changed: To avoid problems when Recording Service is addressed, MSXML2.ServerXMLHTTP is used instead of Microsoft.XMLHTTP.
+   Geändert: Um Probleme bei der Ansprache des Recording Service zu verhindern, wird MSXML2.ServerXMLHTTP statt Microsoft.XMLHTTP verwendet.
+
+
+### New/Changed/Fixed in "2013-02-14 18:00"
+### Neu/Geändert/Behoben in "2013-02-14 18:00"
+.) Fixed: UpdateFavoritesOnly no longer ignores the last transponder. Thanks to DVBViewer forum users "Kira" and "mieszekatz"!
+   Behoben: UpdateFavoritesOnly ignoriert nicht mehr den letzten Transponder. Danke an DVBViewer Forumsbenutzer "Kira" und "mieszekatz"!
+.) Fixed: IncludeCat is now really ignored when UpdateFavoritesOnly is enabled. Thanks to DVBViewer forum users "Kira" and "mieszekatz"!
+   Behoben: IncludeCat wird bei UpdateFavoritesOnly nun wirklich ignoriert. Danke an DVBViewer Forumsbenutzer "Kira" und "mieszekatz"!
+.) New: When UpdateFavoritesOnly=true, invalid favorite channel IDs are logged.
+   Neu: Wenn UpdateFavoritesOnly=true werden ungültige Channel-IDs der Favoriten im Log vermerkt.
+
+
+### New/Changed/Fixed in "2012-12-22 18:00"
+### Neu/Geändert/Behoben in "2012-12-22 18:00"
+.) New: If OSD messages for MediaHighway and SiehFern Info have been disabled, the script logs this and does not wait for OSD messages when DynamicTuneTime=true.
+   Neu: Wenn die Anzeige von OSD-Meldungen für MediaHighway und SiehFern Info deaktiviert wurde, meldet das Script das und wartet nicht auf diese OSD-Meldungen wenn DynamicTuneTime=true.
+.) Fixed: When automatic timeshift is activated, the script recognized this as media playback and did not execute the command defined in ShutDownMode.
+   Behoben: Wenn das automatische Timeshift aktiviert ist, hat das Script das als laufende Medienwiedergabe interpretiert und dadurch die in ShutDownMode definierte Aufgabe nicht ausgeführt.
+.) Changed: Script now behaves correctly when no additional EPG frequencies are configured in DVBViewer.
+   Geändert: Das Script verhält sich nun korrekt wenn im DVBViewer keine Frequenzen für den Empfang zusätzlicher EPG-Daten hinterlegt sind.
+.) Changed: Modified logic to detect manual channel change to avoid false positives ("Channel changed manually ...").
+   Geändert: Angepasste Logik zur Erkennung von manuellen Senderwechseln verhindert falsch-positive Abfragen ("Manueller Senderwechsel ...").
+.) Changed: Renamed variable ShutdownMode to ShutdownActionID.
+   Geändert: Variabel ShutdownMode in ShutdownActionID umbenannt.
+
+
+### New/Changed/Fixed in "2012-12-15 20:00"
+### Neu/Geändert/Behoben in "2012-12-15 20:00"
+.) New: When DynamicTuneTime=true a message is logged when the next transponder provides additional EPG data.
+   Neu: Wenn DynamicTuneTime=true wird darauf hingewiesen, wenn der nächste Transponder erweitere EPG-Daten zur Verfügung stellt.
+.) New: The script now not only shows that the next transponder receives additional EPG data, but also the type of EPG data.
+   Neu: Das Script zeigt nun nicht nur an, dass der nächste Transponder zusätzliche EPG-Daten bereitstellt, sondern auch den Typ der EPG-Daten.
+.) New: The script now knows when addition EPG reception has finished (currently MediaHighway and SiehFern Info but not Freesat). The behavior is now as follows:
+        DynamicTuneTime=true - channel is changed when
+           EPG is stable for at least 5 seconds AND DVBViewer has shown infobar message that additional EPG update has finished
+           OR
+           EPG is stable for time defined in TimeToReceiveAdditionalEPG
+           OR
+           Channel is tuned for double the time defined in TimeToReceiveAdditionalEPG
+        DynamicTuneTime=false - channel is changed when:
+           Channel is tuned for time defined in TimeToReceiveAdditionalEPG
+   Neu: Das Script weiß nun, wann der Empfang zusätzlicher EPG-Daten abgeschlossen ist (derzeit MediaHighway und SiehFern Info, aber nicht Freesat). Das Verhalten ist nun wie folgt:
+        DynamicTuneTime=true - der Kanal wird gewechselt wenn
+           Das EPG is für mindestens 5 Sekunden stabil UND DVBViewer hat in der Infobar angezeigt, dass die zusätzlichen EPG-Daten fertig eingelesen wurden
+           ODER
+           Das EPG ist für die in TimeToReceiveAdditionalEPG definierte Zeit stabil
+           ODER
+           Der Kanal ist länger als die doppelte der in TimeToReceiveAdditionalEPG definierten Zeit aktiv
+        DynamicTuneTime=false - der Kanal wird gewechselt wenn:
+           Der Kanal ist für die in TimeToReceiveAdditionalEPG definierte Zeit aktiv
+.) New: Options ReceiveMHWEPG, ReceiveSFIEPG and ReceiveFreeSatEPG
+      Should DVBViewer be dynamically configured to receive a certain type of additional EPG data?
+      "" uses the setting defined in DVBViewer, true enables and false disables reception of additional EPG data.
+   Neu: Optionen ReceiveMHWEPG, ReceiveSFIEPG und ReceiveFreeSatEPG
+      Soll DVBViewer dynamisch für den Empfang zusätzlicher EPG-Daten konfiguriert werden?
+      "" nutzt die Einstellung im DVBViewer, true aktiviert und false deaktiviert den Empfang zusätzlicher EPG-Daten.
+.) New: Variable ExcludeSat can be used to exclude selected orbital positions (satellites) from EPG update.
+   Neu: Über die Variable ExcludeSat können bestimmte Orbitalpositionen (Satelliten) vom EPG-Update ausgeschlossen werden.
+.) Changed: Variable ExcludeSat is now named ExcludeRoot. Attention: ExcludeSat ist now used for something different.
+   Geändert: Die Variable ExcludeSat heißt nun ExcludeRoot. Achtung: ExcludeSat wird nun für einen anderen Zweck verwendet.
+.) Changed: Detection of frequencies with additional EPG data is done by comparing the frequencies from DVBViewer options with the actual frequency of a channel.
+            Following deviations are allowed depending on the symbol rate: Symbol rate <2000: 0 MHz, 2000-3000: 1 MHz, >3000: 2 MHz. Transedit uses the same values.
+   Geändert: Die Erkennung von zusätzlichen EPG-Frequenzen erfolgt durch Vergleich der in den DVBViewer-Einstellungen hinterlegten Frequenzen mit der tatsächlichen Frequenz eines Senders.
+             Folgende Abweichungen der Frequenz auf Basis der Symbolrate sind erlaubt: Symbolrate <2000: 0 MHz, 2000-3000: 1 MHz, >3000: 2 MHz. Transedit nutzt dieselben Werte.
+.) Changed: Volume is now unmuted at manual channel change when MuteDVBV=true.
+   Geändert: Die Stummschaltung wird bei einem manuellen Senderwechsel nun deaktiviert wenn MuteDVBV=true. 
+.) Changed: Behavior when TestRun=true is now more like TestRun=false, but no data is deleted, no channels are tuned and ShutDownMode is not considered.
+   Geändert: Das Verhalten bei TestRun=true ist nun sehr ähnlich dem bei TestRun=false, es werden aber keine Daten gelöscht, keine Kanäle durchgeschalten und ShutDownMode wird nicht berücksichtigt.
+.) Changed: After a manual channel change the Recording Service "Auto Timer" task is executed before the script ends.
+   Geändert: Nach einem manuellen Senderwechsel wird vor Beenden des Scripts bei verbundenem Recording Service auf selbigem der "Auto Timer"-Task ausgeführt.
+.) Changed: Reworked code for timeshift detection.
+   Geändert: Code zur Erkennung von Timeshift überarbeitet.
+.) Fixed: Check for recording time now takes into condideration already running recordings and also Recording Service recordings (when DVBViewer is connected to that recording list).
+   Behoben: Die Überprüfung auf laufenden Aufnahmen berücksichtigt nun auch bereits laufende Aufnahmen und Aufnahmen des Recording Service (wenn DVBViewer mit dieser Aufnahmeliste verbunden ist).
+.) Fixed: The count of script runs in the log file is now calculated correctly again. Thanks to DVBViewer forum users "Kira" and "Siggi0904"!
+   Behoben: Die Anzahl der Durchläufe in der Log-Datei wird wieder korrekt berechnet. Danke an DVBViewer Forumsbenutzer "Kira" und "Siggi0904"!
+.) Fixed: Identical frequencies on different satellites have not been taken into consideration. Thanks to DVBViewer forum user "Kira"!
+   Behoben: Identische Frequenzen auf verschiedenen Satelliten wurden nicht berücksichtigt. Danke an DVBViewer Forumsbenutzer "Kira"!
+.) Fixed: An error identifying and counting the number of channels with additional EPG data when IncludeCat is used.
+   Behoben: Ein Fehler in der Erkennung der Anzahl der Kanäle mit zusätzlichen EPG-Daten wenn IncludeCat genutzt wird.
+
+
+### New/Changed/Fixed in "2012-11-24 20:00"
+### Neu/Geändert/Behoben in "2012-11-24 20:00"
+.) Fixed: When different channels with identical name exist on different transponders, only the first transponder has been tuned in some cases. 
+   Behoben: Wenn es verschiedene Kanäle mit dem gleichen Namen auf verschiedenen Transpondern gibt, wurde in manchen Fällen nur der erste Transponder eingestellt.
+.) New: Tuned channel number is now logged.
+   Neu: Die Nummer des eingestellten Kanals wird nun angezeigt.
+.) Changed: The list of transponders/channels is now logged in a way that allows for easy analyzing in a spreadsheet.
+   Geändert: Die Liste der Transponder/Kanäle wird nun so dargestellt, dass sie einfach auswertbar ist.
+.) Changed: Screen output is now limited to 79 characters per line and no longer contains the date. The log file still contains the full information.
+   Geändert: Die Bildschirmausgabe ist nun maximal 79 Zeichen pro Zeile lang und enthält nicht mehr das Datum. In der Log-Datei findet sich weiterhin die volle Information. 
+.) Attention: Also consider the significant changes made in "2012-11-23 20:00".
+   Achtung: Auch die grundlegenden Änderungen in "2012-11-23 20:00" beachten.
+
+
+### New/Changed/Fixed in "2012-11-23 20:00"
+### Neu/Geändert/Behoben in "2012-11-23 20:00"
+.) Changed: The script file name is now "DVBViewer-EPG-Update.vbs". Don't forget to update the name in batch files and scheduled tasks!
+            It is recommended to delete all old script files to avoid confusion.
+   Geändert: Die Scriptdatei heißt nun "DVBViewer-EPG-Update.vbs". Nicht vergessen, den Namen auch in Batch-Dateien und geplanten Aufgaben anzupassen!
+             Es wird empfohlen, alle alten Scriptdateien zu löschen um Verwechslungen zu vermeiden.
+.) Changed: The log file name is now "DVBViewer-EPG-Update.log".
+            It is recommended to delete all old script files to avoid confusion.
+   Geändert: Die Logdatei heißt nun "DVBViewer-EPG-Update.log".
+             Es wird empfohlen, alle alten Scriptdateien zu löschen um Verwechslungen zu vermeiden.
+.) Changed: Variable "sIncludeCat" is renamed to "IncludeCat", "sExcludeCat" to "ExcludeCat".
+   Geändert: Variable "sIncludeCat" umbenannt auf "IncludeCat", "sExcludeCat" auf "ExcludeCat".
+.) New: Name of satellite (as in the channellist) is displayed.
+   Neu: Name des Satelliten (laut Senderliste) wird angezeigt.
+.) New: Specific satellites can be excluded from EPG update ("ExcludeSat").
+   Neu: Einzelne Satelliten können vom EPG-Update ausgenommen werden ("ExcludeSat").
+.) Fixed: Variables WasInStandbyAtStartup and WasPlayingMediaAtStartup were shown too early and therefore with wrong values.
+   Behoben: Die Variablen WasInStandbyAtStartup und WasPlayingMediaAtStartup wurden zu früh und daher mit falschen Werten angezeigt.
+.) Fixed: Correctly spelling "DVBViewer" in all files now.
+   Behoben: In allen Dateien wird "DVBViewer" jetzt korrekt buchstabiert.
+
+
+### New/Changed/Fixed in "2012-11-04 20:00"
+### Neu/Geändert/Behoben in "2012-11-04 20:00"
+.) New: DynamicTuneTime enabled per default. This usually reduces the time needed for an EPG update significantly.
+      When enabled, channel is tuned until count of EPG entries is stable for 5 seconds. Local and Recording Service EPG data is deleted and DVBViewer restarted to allow for this to work.
+      When disabled, fixed tune time per channel (variable TimeToGetData) is used.
+   Neu: DynamicTuneTime ist nun standardmäßig aktiviert. Das verringert üblicherweise die Zeit für eine EPG-Aktualisierung merkbar.
+      Wenn aktiviert, bleibt ein Kanal solange aktiv, bis sich die Anzahl der EPG-Einträge 5 Sekunden lang nicht geändert hat. Um das zu ermöglichen, wird das EPG des DVBViewer und des Recording Service gelöscht und der DVBViewer neu gestartet.
+      Wenn deaktiviert, bleibt ein Kanal eine fixe Zeit (Variable TimeToGetData) aktiv.
+.) New: New options MinimizeDVBV and MuteDVBV.
+   Neu: Neue Optionen MinimizeDVBV und MuteDVBV.
+.) New: Script can now not only minimize but also restore the DVBViewer window.
+   Neu: Das Script kann das Fenster des DVBViewer nun nicht nur minimieren sondern auch wiederherstellen.
+.) New: Parameters LanguageFile and LogFile supported in ini file.
+   Neu: Parameter LanguageFile und Logfile werden in der ini-Datei unterstützt.
+.) New: File "readme.txt".
+   Neu: Datei "readme.txt".
+.) New: Script ends when DVBViewer is not configured to receive EPG data.
+   Neu: Das Script beendet sich, wenn der DVBViewer nicht für den Empfang von EPG-Daten konfiguriert ist.
+.) Changed: Option "IncludeFavoriteCategories" is no longer needed and no longer supported. Just set "sIncludeCat" to the value you need.
+   Geändert: Die Option "IncludeFavoriteCategories" wird nicht mehr benötigt und wird nicht mehr unterstützt. Einfach die Option "sIncludeCat" wie gewünscht einstellen.
+.) Changed: Option "IncludeFavorites" renamed to "UpdateFavoritesOnly". The old name is no longer supported.
+   Geändert: Die Option "IncludeFavorites" heißt nun "UpdateFavoritsOnly". Der alte Name wird nicht länger unterstützt.
+.) Changed: From now on, "/ini:<ini file>" is the only supported commandline parameter. All other settings have to be set in an ini file.
+   Geändert: Ab sofort ist "/ini:<ini-Datei>" der einzige unterstützte Kommandoparameter. Alle anderen Einstellung müssen in einer ini-Datei vorgenommen werden.
+.) Changed: Parameter "ReceiveAdditionalEPG" is no longer supported, DVBViewer configuration is used instead.
+   Geändert: Der Parameter "ReceiveAdditionalEPG" wird nicht mehr unterstützt, stattdessen wird die entsprechende Option des DVBViewer verwendet.
+.) Changed: Parameter "TimeToReceiveAdditionalEPG" is only considered when DynamicTuneTime=false.
+   Geändert: Der Parameter "TimeToReceiveAdditionalEPG" wird nur berücksichtigt wenn DynamicTuneTime=false.
+.) Changed: Language files are now ini files.
+   Geändert: Sprachdateien sind nun ini-Dateien.
+.) Changed: Estimated runtime is no longer shown when DynamicTuneTime=true.
+   Geändert: Wenn DynamicTuneTime=true wird die geschätzte Laufzeit nicht mehr angegeben.
+.) Changed: German language file, line 50 (stressing that the runtime is an estimation).
+   Geändert: Deutsche Sprachdatei, Zeile 50 (Betonung darauf, dass die angegebene Laufzeit ein Schätzwert ist). 
+.) Changed: When the script does not end as expected, the exit code is set to 1.
+   Geändert: Wenn das Script nicht wie erwartet endet, wird der Exit Code auf 1 gesetzt.
+.) Changed: When the script ends, the used COM object is cleared.
+   Geändert: Wenn das Script endet, wird das verwendete COM-Objekt zurückgesetzt.
+.) Changed: Using dvbviewer.epgmanager.get(0,0,0,0).count instead of dvbviewer.epgmanager.getasarray(0,0,0,TempEPGArray) for better performance and less RAM consumption.
+   Geändert: Die Verwendung von dvbviewer.epgmanager.get(0,0,0,0).count statt dvbviewer.epgmanager.getasarray(0,0,0,TempEPGArray) ist schneller und braucht weniger RAM.
+.) Changed: Minor changes in formatting.
+   Geändert: Kleine Anpassungen an der Formatierung.
+.) Changed: Changelog and other files are available in English and German from now on.
+   Geändert: Changelog und andere Dateien sind ab sofort in Englisch und Deutsch verfügbar.
+.) Fixed: When DVBViewer was playing media at script start time, the last tuned channel was not restored in setup.xml at the end of the script. Thanks to DVBViewer forum user "ZappoB"!
+   Behoben: Wenn der DVBViewer beim Scriptstart ein Medium wiedergegeben hat, wurde der zuletzt eingestellte TV-Sender am Ende des Script nicht korrekt in der setup.xml eingetragen. Danke an den DVBViewer Forumsbenutzer "ZappoB"!
+.) Fixed: Wrong detection of standby and mediaplayback may lead to unexpected behavior at end of script.
+   Behoben: Fehlerhafte Erkennung des Standby- und Medienwiedergabemodus führte zu unerwartetem Verhalten bei Scriptende.
+.) Fixed: To work around EPG reception problems with some plugins and CI modules, the graph is now rebuilt after each channel change.
+   Behoben: Um Probleme mit dem EPG-Empfang mit einigen Plugins und CI-Modulen zu umgehen, wird die Wiedergabe bei jedem Kanalwechsel neu aufgebaut.
+.) Fixed: EPG data is no longer deleted when "TestRun=true". Thanks to DVBViewer forum user "Siggi0904"!
+   Behoben: EPG-Daten werden nicht mehr gelöscht, wenn TestRun=true. Danke an DVBViewer Forumsbenutzer "Siggi0904"!
+.) Fixed: Recording Service command to delete EPG is no longer sent when no Recording Service connection is configured. Thanks to DVBViewer forum user "Siggi0904"!
+   Behoben: EPG des Recording Service wird nicht mehr versucht zu löschen, wenn keine Verbindung zum Recording Service konfiguriert ist. Danke an DVBViewer Forumsbenutzer "Siggi0904"!
+.) Fixed: Path to epg.dat is now determined correctly, depending on DVBViewer installation mode (usermode.ini).
+   Behoben: Pfad zur epg.dat wird nun korrekt an Hand des DVBViewer Installationsmodus laut usermode.ini ermittelt.
+
+
+### New/Changed in "2012-09-13 13:00"
+.) Fixed: Type mismatch when reading DVBViewer XML setup values. Thanks to DVBViewer forum user "timpi"!
+.) Changed: Runtime estimation takes into consideration 2 seconds for channel change.
+.) Changed: Better description of tuner type, frequency and polarization when switching channels
+
+
+### New/Changed in "2012-09-12 19:00"
+.) Changed: Different formats (date, time, numbers)
+.) New: Messages are shown in the DVBViewer OSD, additional to stdout and logfile.
+.) New: When an activated connection to Recording Service is found, the Recording Service AutoTimer task is started after the EPG update.
+
+
+### New/Changed in "2012-05-04 19:00"
+.) Fixed: Script switched back to wrong channel at the end when DVBViewer was already running when the script was started and when NoUserInteraction and NoUserYes were set to true.
+.) New: Script is now additionally showing the name of last tuned channel, not only the number.
+
+
+### New/Changed in "2012-04-11 21:00"
+.) New: Language is detected automatically based on Operating System language. The parameter /LanguageFile overrides the automatic detection.
+
+
+### New/Changed in "2011-12-29 04:00"
+.) Fixed: Problems with sIncludeCat and sExcludeCat solved.
+.) Changed: sample.ini now uses all channel every day for the EPG update per default.
+
+
+### New/Changed in "2011-11-21 20:00"
+.) New: When DVBViewer is in standby mode when the script starts, DVBViewer will be closed (with ShutdownMode option value).
+.) Fixed: Sub ScanChannels did not work correctly in parameter constellations.
+
+
+### New/Changed in "2011-08-24 17:00"
+.) New: Changelog is no longer part of the script, but a separate file (changelog.txt).
+.) New: Script output can now be set to different languages by using language files.
+.) New: Parameter /LanguageFile (only works from the command line).
+
+
+### New/Changed in "2011-08-01 20:00"
+.) Fixed: Another bug when searching the registry for the DVBViewer installation path.
+
+
+### New/Changed in "2011-07-31 20:00"
+.) Fixed: Logical error while parsing ini file for DVBViewer path.
+
+
+### New/Changed in "2011-07-31 18:30"
+.) Fixed: dvbviewer.exe not found because of wrong registry path in the script.
+
+
+### New/Changed in "2011-07-24 14:00"
+.) New: If DVBViewerExecutablePath is not set or set to a non existant file, the registry is used to find DVBViewer.
+
+
+### New/Changed in "2011-07-23 15:00"
+.) New: DVBViewerExecutablePath can now not only be set within the script, but also in the ini file.
+
+
+### New/Changed in "2011-07-17 14:00"
+.) New: Parameter /NoUserYes.
+.) Fixed: Script differentiates between manually activated timeshift and the DVBViewer setting Automatic TimeShift. If timeshift is started manually, the script exits.
+.) Changed: Formatting of help text.
+
+
+### New/Changed in "2011-07-12 20:00"
+.) Fixed: No longer stating "Applying settings from ini file" when no ini file has been passed as argument.
+.) Fixed: Detected manual channel change when there wasnt one.
+
+
+### New/Changed in "2011-04-27 20:00"
+.) Changed: DVBViewer is now no longer started via the COM object, but directly via VBScript.
+.) New: Variable DVBViewerExecutablePath defines full path to dvbviewer.exe, including the filename. The variable can only be set directly in the script, not via ini-file.
+
+
+### New/Changed in "2010-08-29 20:00"
+.) Fixed: Time estimate has been wrong as longer tune time for receiving additional EPG was not calculated.
+
+
+### New/Changed in "2010-08-26 19:00"
+.) Changed: sIncludeCat and sExcludeCat are no longer shown twice in the log.
+.) New: Parameter /ReceiveAdditionalEPG, see help for detailed description.
+.) New: Options ReceiveAdditionalEPG and TimeToReceiveAdditionalEPG, see sample.ini for detailed description.
+.) Changed: Better handling of malformed ini-files.
+
+
+### New/Changed in "2010-08-10 21:00"
+.) Fixed: Values from ini file have been interpreted as strings instead of integer. Therefore, some calculations falied and channels have not been tuned.
+
+
+### New/Changed in "2010-08-10 20:30"
+.) Fixed: Correct wrong logic in section "Set correct values for boolean variables" (treatment of boolean values vs string values - "true"<>true, "false"<>false). Script was not working correctly anymore (only first channel was tuned, DVBViewer was not started automatically anymore etc.).
+
+
+### New/Changed in "2010-08-10 14:00"
+.) New: Parameter /UseIniFile, see help for detailed description.
+
+
+### New/Changed in "2010-08-09 08:00"
+.) New: Changed method to detect if channel has been changed manually during EPG update.
+.) New: Now showing how many transponders have alread been tuned(for example, "tuning transponder 10/15").
+.) Fixed: Last calculated transponder was only tuned a few seconds, EPG data could not be retrieved.
+.) New: Added configurable time in seconds to wait for the system when the script is startet with "/NoUserInteraction". Const WaitBeforeStart=30.
+.) Changed: Description of constants is now in english language.
+
+
+### New/Changed in "2010-08-04 18:00"
+.) Default for Variable TimeToGetData has been changed from 10 to 20 seconds for mor reliant EPG data reception.
+.) Cleaning of the logfile is now faster (the file only is now opened and closed only once).
+.) Parameters are accepted with the prefixes "/", "-", "--" and without prefixes.
+.) Shorter additional parameter names have been introduced, for example /NoUser is the same as /NoUserInteraction. See help for exact names.
+.) Dictionary objects are used where possible. This should speed up some operations.
+.) List of transponders to be tuned is now calculated before actually tuning the transponders.
+.) The script now shows how long it will take to tune all included transponders. See also "/TestRun".
+.) Help text has been rewritten and re-formatted (automatic word wrap).
+.) The scripts now detects if a channel has been manually changed when DVBViewer was already running and exits at this event. If the script started DBVViewer, this check is not performed.
+.) With the new parameter "/TestRun", the script does everything but changing any settings in DVBViewer or tuning channels.
+.) On the console, the script now shows the total number of channels and the current channel that is being analyzed.
+.) On the console, the script now shows how much time is left until the next channel is tuned.
+
+
+### New/Changed before "2010-08-04 18:00"
+Based on the original script from TB1, see http://www.dvbviewer.tv/forum/topic/16276-update-epgupd-script/.
+Original script adopted by GruberMa.
+
+.) /NoUserInteraction: If user interaction is required, the scripts itself decides.
+.) /FavoriteCategoriesOnly: Only the EPG of channels in specific categories gets updated.
+.) Logfile is shoretened automatically (default: shorten to 10 runs).
+.) Logging additionally to console, not only logfile.
+.) Tuning last channel now also works if DVBViewer has been started by the script.
+.) Check if script and DVBViewer are running with the same permissions (UAC, Windows Vista and up).
+.) Check if script got started with cscript.exe or wscript.exe.
+.) Script is now able to work with favorites.
